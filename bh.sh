@@ -46,6 +46,10 @@ declare -a theight=()
 arraylength=${#nodes[@]}
 tarraylength=${#tnodes[@]}
 
+# Initial Poloniex data fetch
+
+curl -m 2 -s https://poloniex.com/public?command=returnTicker > ./Polo.txt
+
 ## Main loop ##
 
 while true; do
@@ -145,5 +149,17 @@ for (( i=1; i<${tarraylength}+1; i++ )); do
 		fi
 done
 
+## Ticker for BTC_LSK / ETH_LSK peers on Poloniex
+((x++))
+if [ $x = "3" ]; then
+curl -m 2 -s https://poloniex.com/public?command=returnTicker > ./Polo.txt
+x=0
+fi
+echo -e "\n\n"
+cat Polo.txt | cut -d'}' -f129 | tr '{}"",' ':' | awk -F ':::' '{print "     Poloniex BTC_LSK\n" "---------------------------\n" "\033[93m Last: \t\t"$3"\033[0\n", "\033[32m High: \t\t"$5"\033[0\n", "\033[91m" " Low: \t\t"$7"\033[0m";}';
+echo
+cat Polo.txt | cut -d'}' -f131 | tr '{}"",' ':' | awk -F ':::' '{print "     Poloniex ETH_LSK\n" "---------------------------\n" "\033[93m Last: \t\t"$3"\033[0\n", "\033[32m High: \t\t"$5"\033[0\n", "\033[91m" " Low: \t\t"$7"\033[0m";}';
+
 sleep 10
+
 done
