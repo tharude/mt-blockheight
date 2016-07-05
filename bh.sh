@@ -109,7 +109,7 @@ for (( i=1; i<${arraylength}+1; i++ )); do
 			echo -e "  $sname\t\e[31m ==>\t${height[$i]}\033[0m"
 		elif [ ${height[$i]} -lt $two ];
 		then
-			echo -e "  $sname\t\t\e[33m ==>\t${height[$i]}\033[0m"
+			echo -e "  $sname\t\e[33m ==>\t${height[$i]}\033[0m"
 		else
 			echo -e "  $sname\t\t\e[32m${height[$i]}\033[0m"
 		fi
@@ -139,7 +139,7 @@ for (( i=1; i<${tarraylength}+1; i++ )); do
 			echo -e "  $tsname\t\e[31m ==>\t${theight[$i]}\033[0m"
 		elif [ ${theight[$i]} -lt $two ];
 		then
-			echo -e "  $tsname\t\t\e[33m${theight[$i]}\033[0m"
+			echo -e "  $tsname\t\e[33m ==>\t${theight[$i]}\033[0m"
 		else
 			echo -e "  $tsname\t\t\e[32m${theight[$i]}\033[0m"
 		fi
