@@ -12,20 +12,20 @@ node0=("01.lskwallet.space:8000" "01.lskwallet")
 node1=("02.lskwallet.space:8000" "02.lskwallet")
 node2=("03.lskwallet.space:8000" "03.lskwallet")
 node3=("04.lskwallet.space:8000" "04.lskwallet")
-node4=("lisk.phoenix1969.net:8000" "phoenix1969")
+node4=("main-pri.lskwallet.space:8000" "main primary")
 node5=("lisk.liskwallet.io:8000" "liskwallet.io")
 node6=("lisk.fastwallet.online:8000" "fastwallet")
 node7=("lisk.cryptostorms.net:8000" "cryptostorms")
 node8=("lisknode.io:8000" "lisknode.io")
-#node9=()
+node9=("https://login.lisk.io" "login.lisk.io")
 #node10=()
 
 ## Testnet Nodes ##
 tnode0=("testnet.lisk.io:7000" "lisk.io")
 tnode1=("test-pri.lskwallet.space:7000" "test primary")
-tnode2=("lisk.testwallet.online:7000" "testwallet")
-tnode3=("158.69.216.49:7000" "158.69.216.49")
-#tnode4=()
+tnode2=("test-bak.lskwallet.space:7000" "test backup")
+tnode3=("lisk.testwallet.online:7000" "testwallet")
+tnode4=("158.69.216.49:7000" "158.69.216.49")
 #tnode5=()
 #tnode6=()
 #tnode7=()
@@ -36,8 +36,8 @@ tnode3=("158.69.216.49:7000" "158.69.216.49")
 apicall="/api/loader/status/sync"
 
 ## Arrays ##
-declare -a nodes=(node0[@] node1[@] node2[@] node3[@] node4[@] node5[@] node6[@] node7[@] node8[@]) # node9[@] node10[@])
-declare -a tnodes=(tnode0[@] tnode1[@] tnode2[@] tnode3[@]) # tnode4[@] tnode5[@] tnode6[@] tnode7[@] tnode8[@] tnode9[@])
+declare -a nodes=(node0[@] node1[@] node2[@] node3[@] node4[@] node5[@] node6[@] node7[@] node8[@] node9[@]) # node10[@])
+declare -a tnodes=(tnode0[@] tnode1[@] tnode2[@] tnode3[@] tnode4[@]) # tnode5[@] tnode6[@] tnode7[@] tnode8[@] tnode9[@])
 declare -a height=()
 declare -a theight=()
 
@@ -59,7 +59,7 @@ while true; do
 for n in {1..$arraylength..$arraylength}; do   # start $(arraylength) fetch loops
 	for (( i=1; i<${arraylength}+1; i++ )); do
 		saddr=${!nodes[i-1]:0:1}
-		echo $i $(curl -m 2 -s $saddr$apicall | cut -f 5 -d ":" | sed 's/}$//') >> out.txt &
+		echo $i $(curl -m 3 -s $saddr$apicall | cut -f 5 -d ":" | sed 's/}$//') >> out.txt &
         done
         wait
 done
@@ -69,7 +69,7 @@ done
 for n in {1..$tarraylength..$tarraylength}; do   # start $(tarraylength) fetch loops
 	for (( i=1; i<${tarraylength}+1; i++ )); do
 		tsaddr=${!tnodes[i-1]:0:1}
-		echo $i $(curl -m 2 -s $tsaddr$apicall | cut -f 5 -d ":" | sed 's/}$//') >> tout.txt &
+		echo $i $(curl -m 3 -s $tsaddr$apicall | cut -f 5 -d ":" | sed 's/}$//') >> tout.txt &
 	done
 	wait
 done
@@ -94,7 +94,7 @@ echo -e "\e[33m----- MAINNET BLOCKHEIGHTS -----\033[0m"
 
 # Finding the highest block
 
-highest=$(echo "${height[*]}" | sort -nr | cut -f 1 -d " ")
+highest=$(echo "${height[*]}" | sort -nr | cut -f 2 -d " ")
 echo -e "\e[32m  Highest block is ==> $highest \033[0m"
 
 # Decreasing current blockheight for checks
@@ -124,7 +124,7 @@ echo -e "\e[33m----- TESTNET BLOCKHEIGHTS -----\033[0m"
 
 # Finding the highest testnet block
 
-thighest=$(echo "${theight[*]}" | sort -nr | cut -f 1 -d " ")
+thighest=$(echo "${theight[*]}" | sort -nr | cut -f 2 -d " ")
 echo -e "\e[32m  Highest block is ==> $thighest \033[0m"
 
 # Decreasing current blockheight for checks
