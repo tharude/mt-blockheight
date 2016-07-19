@@ -48,7 +48,7 @@ tarraylength=${#tnodes[@]}
 
 # Initial Poloniex data fetch
 
-curl -m 2 -s https://poloniex.com/public?command=returnTicker > ./Polo.txt
+curl -m 3 -s https://poloniex.com/public?command=returnTicker > ./Polo.txt
 
 ## Main loop ##
 
