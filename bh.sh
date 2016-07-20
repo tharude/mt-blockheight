@@ -93,9 +93,10 @@ clear
 echo -e "\e[33m----- MAINNET BLOCKHEIGHTS -----\033[0m"
 
 # Finding the highest block
-
-highest=$(echo "${height[*]}" | sort -nr | cut -f 2 -d " ")
+IFS=$'\n'
+highest=($(sort -nr <<<"${height[*]}"))
 echo -e "\e[32m  Highest block is ==> $highest \033[0m"
+unset IFS
 
 # Decreasing current blockheight for checks
 two=$((highest-2)) # two blocks behind
@@ -123,9 +124,10 @@ echo
 echo -e "\e[33m----- TESTNET BLOCKHEIGHTS -----\033[0m"
 
 # Finding the highest testnet block
-
-thighest=$(echo "${theight[*]}" | sort -nr | cut -f 2 -d " ")
+IFS=$'\n'
+thighest=($(sort -nr <<<"${theight[*]}"))
 echo -e "\e[32m  Highest block is ==> $thighest \033[0m"
+unset IFS
 
 # Decreasing current blockheight for checks
 two=$((thighest-2)) # two blocks behind
